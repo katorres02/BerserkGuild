@@ -1,2 +1,4 @@
-# berserk-guild
-Private wow addon
+# Berserk Guild Addon
+
+### Overview
+Addon says hi to current player
