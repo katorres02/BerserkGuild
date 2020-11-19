@@ -1,0 +1,10 @@
+## Title: Berserk
+## Interface: 11305
+## Notes: Berserk Guild WoW Classic.
+## Author: Merloc
+## Version: 1.0.0-beta
+## X-License: GPL v2
+## SavedVariables: Berserk3DB
+## DefaultState: enabled
+
+Berserk.lua
