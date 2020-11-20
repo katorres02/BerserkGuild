@@ -4,7 +4,8 @@
 ## Author: Merloc
 ## Version: 1.0.0-beta
 ## X-License: GPL v2
-## SavedVariables: Berserk3DB
+## SavedVariables: BerserkDB
 ## DefaultState: enabled
 
+config.lua
 Berserk.lua
