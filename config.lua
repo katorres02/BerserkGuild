@@ -214,7 +214,7 @@ end
 -- Utility Functions
 ------------------------------
 function BerserkAddon:printHelp()
-    print("Berserk CLI Options\n",
+    self:Print("CLI Options\n",
         "mr | mage rotation\n",
         "    Displays this week's mage rotation\n",
         "? | help\n",
@@ -245,8 +245,9 @@ end
 
 function BerserkAddon:prettyMageRotation()
     r,b = BerserkAddon:MageRotation();
-    print("This week's mage rotation:\n",
-        r);
-    print("On bench:\n",
+    self:Print("Weekly Mage Rotation\n",
+        "Roster\n    ",
+        r,
+        "\nBench:\n    ",
         b);
 end
