@@ -16,7 +16,8 @@
 
 ### Using **/bs** or **/berserk** commands
 Will display the UI config section
-![sdasda](https://user-images.githubusercontent.com/1949867/99911900-6cc59680-2cc5-11eb-95a3-d1260adf05ab.PNG)
+![image](https://user-images.githubusercontent.com/1949867/99913158-dba2ef80-2cc5-11eb-8555-a119e3db5027.png)
+
 
 
 ### Do not forget that:
