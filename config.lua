@@ -1,101 +1,205 @@
---------------------------------------
--- Namespaces
---------------------------------------
-local _, core = ...;
-core.Config = {}; -- adds Config table to addon namespace
+BerserkAddon = LibStub("AceAddon-3.0"):NewAddon("BerserkAddon", "AceConsole-3.0", "AceEvent-3.0")
 
-local Config = core.Config;
-local UIConfig;
-
---------------------------------------
--- Defaults (usually a database!)
---------------------------------------
 local defaults = {
-	theme = {
-		r = 0, 
-		g = 0.8, -- 204/255
-		b = 1,
-		hex = "00ccff"
-	}
+    profile = {
+        message = "Welcome Home!",
+        showInChat_1 = false,
+        playerName_1 = "",
+        messagePlayer_1 = "",
+    },
 }
 
---------------------------------------
--- Config functions
---------------------------------------
-function Config:Toggle()
-	local menu = UIConfig or Config:CreateMenu();
-	menu:SetShown(not menu:IsShown());
+-- this table controls the number of messages that the addon displays
+local deathMessagesList = {}
+
+local options = {
+    name = "BerserkAddon",
+    handler = BerserkAddon,
+    type = "group",
+    args = {
+        desc = {
+			order = 0,
+			type = "description",
+			name = "Guild relevant information.",
+        },
+        deathMessages={
+            order = 1,
+            name = "Death Messages",
+            type = "group",
+            args={
+                desc = {
+                    order = 0,
+                    type = "description",
+                    name = "Display a message when a party player dies",
+                },
+                inputPlayerName_1 = {
+                    order = 0,
+                    type = "input",
+                    name = "Name of Player 1",
+                    desc = "Target Player name",
+                    usage = "<Your message>",
+                    get = "GetPlayerName_1",
+                    set = "SetPlayerName_1",
+                },
+                inputMessagePlayer_1 = {
+                    order = 1,
+                    type = "input",
+                    name = "Message for Player 1",
+                    desc = "This is the message you want to show when this player dies",
+                    usage = "<Your message>",
+                    get = "GetMessagePlayer_1",
+                    set = "SetMessagePlayer_1",
+                },
+                showInChat = {
+                    order = 2,
+                    type = "toggle",
+                    name = "Trigger listener",
+                    desc = "Triggers a listener event every second checking if the player is dead or not.",
+                    get = "IsShowInChat_1",
+                    set = "ToggleShowInChat_1",
+                },
+            },
+        },
+        druids = {
+            order = 2,
+            name = "Druids",
+            type = "group",
+            args = {}
+        },
+        hunters = {
+            order = 3,
+            name = "Hunters",
+            type = "group",
+            args = {}
+        },
+        mages = {
+            order = 4,
+            name = "Mages",
+            type = "group",
+            args = {
+                desc = {
+                    order = 0,
+                    type = "description",
+                    name = "MSGES ARE THE BEST!",
+                },
+            }
+        },
+        priests = {
+            order = 5,
+            name = "Priests",
+            type = "group",
+            args = {}
+        },
+        rogues = {
+            order = 6,
+            name = "Rogues",
+            type = "group",
+            args = {}
+        },
+        shamans = {
+            order = 7,
+            name = "Shamans",
+            type = "group",
+            args = {}
+        },
+        warlocks = {
+            order = 8,
+            name = "Warlocks",
+            type = "group",
+            args = {}
+        },
+        warriors = {
+            order = 9,
+            name = "Warriors",
+            type = "group",
+            args = {}
+        },
+    },
+}
+
+function BerserkAddon:OnInitialize()
+    self:Print("Welcome back "..UnitName("player").."!")
+    self.db = LibStub("AceDB-3.0"):New("BerserkDB", defaults, true)
+
+    -- Called when the addon is loaded
+    LibStub("AceConfig-3.0"):RegisterOptionsTable("BerserkAddon", options)
+    self.optionsFrame = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("BerserkAddon", "Berserk Guild")
+    self:RegisterChatCommand("berserk", "ChatCommand")
+    self:RegisterChatCommand("bs", "ChatCommand")
+
+    self:InitializeThicker()
 end
 
-function Config:GetThemeColor()
-	local c = defaults.theme;
-	return c.r, c.g, c.b, c.hex;
+function BerserkAddon:InitializeThicker()
+    if self.db.profile.showInChat_1 then
+        self.hanldeTicker = C_Timer.NewTicker(1, function() self:DetectDeadPlayer() end)
+    end
 end
 
-function Config:CreateButton(point, relativeFrame, relativePoint, yOffset, text)
-	local btn = CreateFrame("Button", nil, UIConfig, "GameMenuButtonTemplate");
-	btn:SetPoint(point, relativeFrame, relativePoint, 0, yOffset);
-	btn:SetSize(140, 40);
-	btn:SetText(text);
-	btn:SetNormalFontObject("GameFontNormalLarge");
-	btn:SetHighlightFontObject("GameFontHighlightLarge");
-	return btn;
+function BerserkAddon:CancelThicker()
+    if not self.hanldeTicker:IsCancelled() then
+        self.hanldeTicker:Cancel()
+    end
 end
 
-function Config:CreateMenu()
-	UIConfig = CreateFrame("Frame", "BerserkConfig", UIParent, "BasicFrameTemplateWithInset");
-	UIConfig:SetSize(260, 360);
-	UIConfig:SetPoint("CENTER"); -- Doesn't need to be ("CENTER", UIParent, "CENTER")
+function BerserkAddon:DetectDeadPlayer()
+    groupMembers = GetNumGroupMembers()
+    for i=1, groupMembers do
+        name = select(1, GetRaidRosterInfo(i)):lower()
+        isDead = select(9, GetRaidRosterInfo(i))
 
-	UIConfig.title = UIConfig:CreateFontString(nil, "OVERLAY", "GameFontHighlight");
-	UIConfig.title:SetPoint("CENTER", UIConfig.TitleBg, "CENTER", 0, 0);
-	UIConfig.title:SetText("Berserk Options");
+        if( name == self.db.profile.playerName_1:lower() and isDead ) then
 
-	----------------------------------
-	-- Buttons
-	----------------------------------
-	-- Save Button:
-	UIConfig.saveBtn = self:CreateButton("CENTER", UIConfig, "TOP", -70, "Save");
+            if (not deathMessagesList[name]) then
+                self:Print(name..(": dead detected"))
+                SendChatMessage(self.db.profile.messagePlayer_1, "RAID")
+                deathMessagesList[name] = true
+            end
 
-	-- Reset Button:	
-	UIConfig.resetBtn = self:CreateButton("TOP", UIConfig.saveBtn, "BOTTOM", -10, "Reset");
+        elseif ( name == self.db.profile.playerName_1:lower() and not isDead ) then
+            -- when player is alive again we enable the message again
+            deathMessagesList[name] = false
+        end
+    end
+end
 
-	-- Load Button:	
-	UIConfig.loadBtn = self:CreateButton("TOP", UIConfig.resetBtn, "BOTTOM", -10, "Load");
+function BerserkAddon:ChatCommand(input)
+    if not input or input:trim() == "" then
+        InterfaceOptionsFrame_OpenToCategory(self.optionsFrame)
+    else
+        LibStub("AceConfigCmd-3.0"):HandleCommand("bs", "BerserkAddon", input)
+    end
+end
 
-	----------------------------------
-	-- Sliders
-	----------------------------------
-	-- Slider 1:
-	UIConfig.slider1 = CreateFrame("SLIDER", nil, UIConfig, "OptionsSliderTemplate");
-	UIConfig.slider1:SetPoint("TOP", UIConfig.loadBtn, "BOTTOM", 0, -20);
-	UIConfig.slider1:SetMinMaxValues(1, 100);
-	UIConfig.slider1:SetValue(50);
-	UIConfig.slider1:SetValueStep(30);
-	UIConfig.slider1:SetObeyStepOnDrag(true);
+function BerserkAddon:OnEnable()
+    -- Called when the addon is enabled
+end
 
-	-- Slider 2:
-	UIConfig.slider2 = CreateFrame("SLIDER", nil, UIConfig, "OptionsSliderTemplate");
-	UIConfig.slider2:SetPoint("TOP", UIConfig.slider1, "BOTTOM", 0, -20);
-	UIConfig.slider2:SetMinMaxValues(1, 100);
-	UIConfig.slider2:SetValue(40);
-	UIConfig.slider2:SetValueStep(30);
-	UIConfig.slider2:SetObeyStepOnDrag(true);
+function BerserkAddon:GetPlayerName_1(info)
+    return self.db.profile.playerName_1
+end
 
-	----------------------------------
-	-- Check Buttons
-	----------------------------------
-	-- Check Button 1:
-	UIConfig.checkBtn1 = CreateFrame("CheckButton", nil, UIConfig, "UICheckButtonTemplate");
-	UIConfig.checkBtn1:SetPoint("TOPLEFT", UIConfig.slider1, "BOTTOMLEFT", -10, -40);
-	UIConfig.checkBtn1.text:SetText("My Check Button!");
+function BerserkAddon:SetPlayerName_1(info, newValue)
+    self.db.profile.playerName_1 = newValue
+end
 
-	-- Check Button 2:
-	UIConfig.checkBtn2 = CreateFrame("CheckButton", nil, UIConfig, "UICheckButtonTemplate");
-	UIConfig.checkBtn2:SetPoint("TOPLEFT", UIConfig.checkBtn1, "BOTTOMLEFT", 0, -10);
-	UIConfig.checkBtn2.text:SetText("Another Check Button!");
-	UIConfig.checkBtn2:SetChecked(true);
-	
-	UIConfig:Hide();
-	return UIConfig;
+function BerserkAddon:GetMessagePlayer_1(info)
+    return self.db.profile.messagePlayer_1
+end
+
+function BerserkAddon:SetMessagePlayer_1(info, newValue)
+    self.db.profile.messagePlayer_1 = newValue
+end
+
+function BerserkAddon:IsShowInChat_1(info)
+    return self.db.profile.showInChat_1
+end
+
+function BerserkAddon:ToggleShowInChat_1(info, value)
+    self.db.profile.showInChat_1 = value
+    if value then
+        self:InitializeThicker()
+    else
+        self:CancelThicker()
+    end
 end

@@ -6,6 +6,8 @@
 ## X-License: GPL v2
 ## SavedVariables: BerserkDB
 ## DefaultState: enabled
+## OptionalDeps: Ace3
+## X-Embeds: Ace3
 
+embeds.xml
 config.lua
-Berserk.lua
