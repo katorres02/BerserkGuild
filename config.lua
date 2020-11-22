@@ -164,8 +164,13 @@ function BerserkAddon:DetectDeadPlayer()
 end
 
 function BerserkAddon:ChatCommand(input)
+
     if not input or input:trim() == "" then
         InterfaceOptionsFrame_OpenToCategory(self.optionsFrame)
+    elseif input == "help" or input == "?" then
+        BerserkAddon:printHelp();
+    elseif input == "mr" or input == "mage rotation" then
+        BerserkAddon:prettyMageRotation();
     else
         LibStub("AceConfigCmd-3.0"):HandleCommand("bs", "BerserkAddon", input)
     end
@@ -202,4 +207,46 @@ function BerserkAddon:ToggleShowInChat_1(info, value)
     else
         self:CancelThicker()
     end
+end
+
+
+------------------------------
+-- Utility Functions
+------------------------------
+function BerserkAddon:printHelp()
+    print("Berserk CLI Options\n",
+        "mr | mage rotation\n",
+        "    Displays this week's mage rotation\n",
+        "? | help\n",
+        "    Shows this help message"
+    );
+end
+
+------------------------------
+-- Mage Specific Functions
+------------------------------
+function BerserkAddon:MageRotation()
+    m = {'Lilschierke', 'Lillybell', 'Arven', 'Firebeard', 'Merloc', 'Glico'};
+    benchindex = math.fmod(52, date("%V"));
+    roster = '';
+    for i = 1, #m do
+        if i ~= benchindex then
+            if roster == '' then
+                roster = m[i];
+            else
+                roster = roster .. ", " .. m[i];
+            end
+        else
+            bench = m[i];
+        end
+    end
+    return roster,bench;
+end
+
+function BerserkAddon:prettyMageRotation()
+    r,b = BerserkAddon:MageRotation();
+    print("This week's mage rotation:\n",
+        r);
+    print("On bench:\n",
+        b);
 end
