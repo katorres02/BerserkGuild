@@ -227,7 +227,16 @@ end
 ------------------------------
 function BerserkAddon:MageRotation()
     m = {'Lilschierke', 'Lillybell', 'Arven', 'Firebeard', 'Merloc', 'Glico'};
-    benchindex = math.fmod(52, date("%V"));
+
+    day = date("%a");
+    weekno = date("%V");
+    if day == "Sun" or day == "Mon" then
+        weekno = weekno - 1;
+    end
+
+    -- +1 because lua starts arrays at 1 and not 0
+    -- +3 to offset for our existing rotation to continue
+    benchindex = math.fmod(6, (52 - weekno)) + 4;
     roster = '';
     for i = 1, #m do
         if i ~= benchindex then
