@@ -163,13 +163,12 @@ function BerserkAddon:DetectDeadPlayer()
 end
 
 function BerserkAddon:ChatCommand(input)
-
     if not input or input:trim() == "" then
         InterfaceOptionsFrame_OpenToCategory(self.optionsFrame)
     elseif input == "help" or input == "?" then
         BerserkAddon:printHelp();
     elseif input == "mr" or input == "mage rotation" then
-        BerserkAddon:prettyMageRotation();
+        BerserkAddon:printRotation(Mages)
     else
         LibStub("AceConfigCmd-3.0"):HandleCommand("bs", "BerserkAddon", input)
     end
@@ -208,7 +207,6 @@ function BerserkAddon:ToggleShowInChat_1(info, value)
     end
 end
 
-
 ------------------------------
 -- Utility Functions
 ------------------------------
@@ -221,41 +219,8 @@ function BerserkAddon:printHelp()
     );
 end
 
-------------------------------
--- Mage Specific Functions
-------------------------------
-function BerserkAddon:MageRotation()
-    m = {'Lilschierke', 'Lillybell', 'Arven', 'Firebeard', 'Merloc', 'Glico'};
-
-    day = date("%a");
-    weekno = date("%V");
-    if day == "Sun" or day == "Mon" then
-        weekno = weekno - 1;
-    end
-
-    -- +1 because lua starts arrays at 1 and not 0
-    -- +3 to offset for our existing rotation to continue
-    benchindex = math.fmod(6, (52 - weekno)) + 4;
-    roster = '';
-    for i = 1, #m do
-        if i ~= benchindex then
-            if roster == '' then
-                roster = m[i];
-            else
-                roster = roster .. ", " .. m[i];
-            end
-        else
-            bench = m[i];
-        end
-    end
-    return roster,bench;
-end
-
-function BerserkAddon:prettyMageRotation()
-    r,b = BerserkAddon:MageRotation();
-    self:Print("Weekly Mage Rotation\n",
-        "Roster\n    ",
-        r,
-        "\nBench:\n    ",
-        b);
+function BerserkAddon:printRotation(_class)
+    -- _class variable must respond to Rotation method
+    -- _class variable could be any available class in the game
+    self:Print(_class:Rotation());
 end
