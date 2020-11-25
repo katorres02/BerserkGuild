@@ -1,3 +1,8 @@
+------------------------------
+-- variable BS is shared across the files
+------------------------------
+local _, BS = ...
+
 BerserkAddon = LibStub("AceAddon-3.0"):NewAddon("BerserkAddon", "AceConsole-3.0", "AceEvent-3.0")
 
 local defaults = {
@@ -76,13 +81,7 @@ local options = {
             order = 4,
             name = "Mages",
             type = "group",
-            args = {
-                desc = {
-                    order = 0,
-                    type = "description",
-                    name = "MSGES ARE THE BEST!",
-                },
-            }
+            args = Mages.UIOptions
         },
         priests = {
             order = 5,
