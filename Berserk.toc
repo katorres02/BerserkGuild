@@ -11,5 +11,13 @@
 
 embeds.xml
 
+Libs/classes/druids.lua
+Libs/classes/hunters.lua
 Libs/classes/mages.lua
+Libs/classes/priests.lua
+Libs/classes/rogues.lua
+Libs/classes/shamans.lua
+Libs/classes/warlocks.lua
+Libs/classes/warriors.lua
+
 config.lua

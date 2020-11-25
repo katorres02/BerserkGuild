@@ -69,13 +69,13 @@ local options = {
             order = 2,
             name = "Druids",
             type = "group",
-            args = {}
+            args = Druids.UIOptions
         },
         hunters = {
             order = 3,
             name = "Hunters",
             type = "group",
-            args = {}
+            args = Hunters.UIOptions
         },
         mages = {
             order = 4,
@@ -87,31 +87,31 @@ local options = {
             order = 5,
             name = "Priests",
             type = "group",
-            args = {}
+            args = Priests.UIOptions
         },
         rogues = {
             order = 6,
             name = "Rogues",
             type = "group",
-            args = {}
+            args = Rogues.UIOptions
         },
         shamans = {
             order = 7,
             name = "Shamans",
             type = "group",
-            args = {}
+            args = Shamans.UIOptions
         },
         warlocks = {
             order = 8,
             name = "Warlocks",
             type = "group",
-            args = {}
+            args = Warlocks.UIOptions
         },
         warriors = {
             order = 9,
             name = "Warriors",
             type = "group",
-            args = {}
+            args = Warriors.UIOptions
         },
     },
 }
