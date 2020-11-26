@@ -10,4 +10,6 @@
 ## X-Embeds: Ace3
 
 embeds.xml
+
+Libs/classes/mages.lua
 config.lua
