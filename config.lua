@@ -113,6 +113,12 @@ local options = {
             type = "group",
             args = Warriors.UIOptions
         },
+        professions = {
+            order = 10,
+            name = "Professions",
+            type = "group",
+            args = Professions.UIOptions
+        }
     },
 }
 
@@ -163,12 +169,18 @@ function BerserkAddon:DetectDeadPlayer()
 end
 
 function BerserkAddon:ChatCommand(input)
+    words = {};
+    for word in input:gmatch("%w+") do table.insert(words, word) end
+
     if not input or input:trim() == "" then
         InterfaceOptionsFrame_OpenToCategory(self.optionsFrame)
-    elseif input == "help" or input == "?" then
+    elseif words[1] == "help" or words[1] == "?" then
         BerserkAddon:printHelp();
-    elseif input == "mr" or input == "mage rotation" then
+    elseif words[1] == "rotation" then
         BerserkAddon:printRotation(Mages)
+    elseif words[1] == "prof" or words[1] == "professions" then
+        table.remove(words, 1);
+        BerserkAddon:getProfessions(words)
     else
         LibStub("AceConfigCmd-3.0"):HandleCommand("bs", "BerserkAddon", input)
     end
@@ -214,6 +226,8 @@ function BerserkAddon:printHelp()
     self:Print("CLI Options\n",
         "mr | mage rotation\n",
         "    Displays this week's mage rotation\n",
+        "prof | professions\n",
+        "    Get profession masters for specific recipes\n",
         "? | help\n",
         "    Shows this help message"
     );
@@ -223,4 +237,21 @@ function BerserkAddon:printRotation(_class)
     -- _class variable must respond to Rotation method
     -- _class variable could be any available class in the game
     self:Print(_class:Rotation());
+end
+
+function BerserkAddon:getProfessions(args)
+    prof = table.remove(args, 1);
+    if prof == "ench" or prof == "enchanting" then
+        self:Print("Enchanters: " .. Enchanting:getEnchanters(args));
+    elseif prof == "alch" or prof == "alchemy" then
+        self:Print("Alchemists: " .. Alchemy:getAlchemists(args));
+    elseif prof == "bs" or prof == "blacksmith" then
+        self:Print("Blacksmiths: " .. Blacksmithing:getBlacksmiths(args));
+    elseif prof == "lw" or prof == "leatherworking" then
+        self:Print("Leatherworkers: " .. Leatherworking:getLeatherworkers(args));
+    elseif prof == "t" or prof == "tailoring" then
+        self:Print("Tailors: " .. Tailoring:getTailors(args));
+    else
+        self:Print("Invalid profession syntax");
+    end
 end
