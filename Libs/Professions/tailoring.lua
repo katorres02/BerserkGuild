@@ -2,6 +2,11 @@ local _, BS = ...
 
 -- Tailoring map
 Tailoring = {
+    categories = {
+        'Bags',
+        'Armor',
+        'Cloaks',
+    },
     bags = {
         mooncloth = {
             'Mooncloth',

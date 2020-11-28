@@ -2,6 +2,16 @@ local _, BS = ...
 
 -- Enchants map
 Enchanting = {
+    categories = {
+        'Weapon',
+        'Shield',
+        'Cloak',
+        'Chest',
+        'Bracer',
+        'Gloves',
+        'Boots',
+        'Oils'
+    },
     weapon = {
         crusader = {
             'Crusader',

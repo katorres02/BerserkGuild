@@ -48,9 +48,7 @@ Professions = {
             get = function(info)
                 return selectedSubProfession;
             end,
-            set = function(info, value)
-                Professions:updateSubOptions(value);
-            end,
+            set = function(info, value) selectedSubProfession = value; end,
         },
         professors = {
             order = 4,
@@ -63,38 +61,10 @@ Professions = {
 function Professions:updateOptions(value)
     selectedProfession = value;
     selectedSubProfession = "";
-    count = #subProfessionValues
-    for i=0, count do subProfessionValues[i]=nil end
-    if value == "Alchemy" then
-        table.insert(subProfessionValues, "Flasks");
-        table.insert(subProfessionValues, "Elixirs");
-        table.insert(subProfessionValues, "Resist Potions");
-        table.insert(subProfessionValues, "Miscellaneous");
-    elseif value == "Blacksmithing" then
-        table.insert(subProfessionValues, "Armor");
-        table.insert(subProfessionValues, "Weapon");
-        table.insert(subProfessionValues, "Miscellaneous");
-    elseif value == "Enchanting" then
-        table.insert(subProfessionValues, "Boots");
-        table.insert(subProfessionValues, "Bracer");
-        table.insert(subProfessionValues, "Chest");
-        table.insert(subProfessionValues, "Cloak");
-        table.insert(subProfessionValues, "Gloves");
-        table.insert(subProfessionValues, "Shield");
-        table.insert(subProfessionValues, "Weapon");
-        table.insert(subProfessionValues, "Oils");
-    elseif value == "Leatherworking" then
-        table.insert(subProfessionValues, "Armor");
-        table.insert(subProfessionValues, "Cloak");
-    elseif value == "Tailoring" then
-        table.insert(subProfessionValues, "Bags");
-        table.insert(subProfessionValues, "Armor");
-        table.insert(subProfessionValues, "Cloak");
+    wipe(subProfessionValues);
+    for i,v in ipairs(_G[value].categories) do
+        table.insert(subProfessionValues, v);
     end
-end
-
-function Professions:updateSubOptions(value)
-    selectedSubProfession = value;
 end
 
 function Professions:updateProfessors()
@@ -110,15 +80,15 @@ function Professions:updateProfessors()
 end
 
 function Professions:parseInput(args)
-    local slot = _G[selectedProfession]:parseSlot(table.remove(args, 1));
-    local caty = _G[selectedProfession]:parseCaty(table.remove(args, 1));
+    local slot = _G[selectedProfession]:parseSlot(args[1]);
+    local caty = _G[selectedProfession]:parseCaty(args[2]);
     return { slot, caty };
 end
 
 function Professions:getProfessors(args)
     local input = self:parseInput(args);
-    local slot = table.remove(input, 1);
-    local caty = table.remove(input, 1);
+    local slot = input[1];
+    local caty = input[2];
 
     if caty == "all" then
         local proflist = "";

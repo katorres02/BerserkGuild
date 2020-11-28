@@ -2,6 +2,12 @@ local _, BS = ...
 
 -- Alchemy map
 Alchemy = {
+    categories = {
+        'Flasks',
+        'Elixirs',
+        'Resistance Potions',
+        'Miscellaneous'
+    },
     flask = {
         distilledwisdom = {
             'Distilled Wisdom',

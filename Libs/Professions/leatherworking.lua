@@ -2,6 +2,10 @@ local _, BS = ...
 
 -- Enchants map
 Leatherworking = {
+    categories = {
+        'Armor',
+        'Cloaks'
+    },
     armor = {
         devilsaur = {
             'Devilsaur Armor Set',

@@ -2,6 +2,11 @@ local _, BS = ...
 
 -- Blacksmithing map
 Blacksmithing = {
+    categories = {
+        'Weapons',
+        'Armor',
+        'Miscellaneous'
+    },
     weapon = {
         nightfall = {
             'Nightfall',
