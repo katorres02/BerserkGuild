@@ -43,7 +43,7 @@ Professions = {
         selectsubprof = {
             order = 3,
             type = "select",
-            name = function(info) return selectedProfession; end,
+            name = "Category",
             values = subProfessionValues;
             get = function(info)
                 return selectedSubProfession;
@@ -99,59 +99,37 @@ end
 
 function Professions:updateProfessors()
     local professors = "";
-    if selectedProfession == "Alchemy" and selectedSubProfession ~= "" then
-        professors = Professions:Alchemy();
-    elseif selectedProfession == "Blacksmithing" and selectedSubProfession ~= "" then
-        professors = Professions:Blacksmithing();
-    elseif selectedProfession == "Enchanting" and selectedSubProfession ~= "" then
-        professors = Professions:Enchanting();
-    elseif selectedProfession == "Leatherworking" and selectedSubProfession ~= "" then
-        professors = Professions:Leatherworking();
-    elseif selectedProfession == "Tailoring" and selectedSubProfession ~= "" then
-        professors = Professions:Tailoring();
+    if selectedSubProfession ~= "" then
+        local args = { 
+            string.lower(subProfessionValues[selectedSubProfession]),
+            "all"
+        };
+        professors = Professions:getProfessors(args);
     end
     return professors;
 end
 
-
-function Professions:Alchemy()
-    local args = { 
-        string.lower(subProfessionValues[selectedSubProfession]),
-        "all"
-    };
-    return Alchemy:getAlchemists(args);
+function Professions:parseInput(args)
+    local slot = _G[selectedProfession]:parseSlot(table.remove(args, 1));
+    local caty = _G[selectedProfession]:parseCaty(table.remove(args, 1));
+    return { slot, caty };
 end
 
-function Professions:Blacksmithing()
-    local args = { 
-        string.lower(subProfessionValues[selectedSubProfession]),
-        "all"
-    };
-    return Blacksmithing:getBlacksmiths(args);
-end
+function Professions:getProfessors(args)
+    local input = self:parseInput(args);
+    local slot = table.remove(input, 1);
+    local caty = table.remove(input, 1);
 
-function Professions:Enchanting()
-    local args = { 
-        string.lower(subProfessionValues[selectedSubProfession]),
-        "all"
-    };
-    return Enchanting:getEnchanters(args);
-end
-
-function Professions:Leatherworking()
-    local args = { 
-        string.lower(subProfessionValues[selectedSubProfession]),
-        "all"
-    };
-    return Leatherworking:getLeatherworkers(args);
-end
-
-function Professions:Tailoring()
-    local args = { 
-        string.lower(subProfessionValues[selectedSubProfession]),
-        "all"
-    };
-    return Tailoring:getTailors(args);
+    if caty == "all" then
+        local proflist = "";
+        for k,v in pairs(_G[selectedProfession][slot]) do
+            local prettyhdr = "\124cFF00DEAD" ..  _G[selectedProfession][slot][k][1] .. "\n\124r";
+            proflist = proflist .. prettyhdr .. table.concat(_G[selectedProfession][slot][k][2], ", ") .. "\n\n";
+        end
+        return proflist;
+    else
+        return table.concat(_G[selectedProfession][slot][caty], ", ");
+    end
 end
 
 function Professions:Description()

@@ -3,23 +3,68 @@ local _, BS = ...
 -- Enchants map
 Leatherworking = {
     armor = {
-        devilsaur = {},
-        corehound = {},
-        stormshroud = {'Nico'},
-        volcanic = {'Nico'},
-        blackdragonscale = {},
-        dreamscale = {},
-        primalbatskin = {'Nico'},
-        sandstalker = {'Nico'},
-        bramblewood = {},
-        polar = {'Nico'},
-        icyscale = {'Nico'}
+        devilsaur = {
+            'Devilsaur Armor Set',
+            {}
+        },
+        corehound = {
+            'Corehound Armor Set',
+            {}
+        },
+        stormshroud = {
+            'Stormshroud Armor Set',
+            {'Nico'}
+        },
+        volcanic = {
+            'Volcanic Armor Set',
+            {'Nico'}
+        },
+        blackdragonscale = {
+            'Black Dragonscale Armor Set',
+            {}
+        },
+        dreamscale = {
+            'Dreamscale Armor Set',
+            {}
+        },
+        primalbatskin = {
+            'Primal Batskin Armor Set',
+            {'Nico'}
+        },
+        sandstalker = {
+            'Sandstalker Armor Set',
+            {'Nico'}
+        },
+        bramblewood = {
+            'Bramblewood Armor Set',
+            {}
+        },
+        polar = {
+            'Polar Armor Set',
+            {'Nico'}
+        },
+        icyscale = {
+            'Icy Scale Armor Set',
+            {'Nico'}
+        }
     }, 
     cloak = {
-        hideofthewild = {},
-        onyxia = {},
-        chromatic = {},
-        shifting = {'Nico'}
+        hideofthewild = {
+            'Hide of the Wild',
+            {}
+        },
+        onyxia = {
+            'Onyxia Scale Cloak',
+            {}
+        },
+        chromatic = {
+            'Chromatic Cloak',
+            {}
+        },
+        shifting = {
+            'Shifting Cloak',
+            {'Nico'}
+        }
     }
 }
 
@@ -33,7 +78,7 @@ function Leatherworking:parseSlot(slot)
     end
 end
 
-function Leatherworking:parseLW(lw)
+function Leatherworking:parseCaty(lw)
     if string.find(lw, "devilsaur") ~= nil then
         return 'devilsaur';
     elseif string.find(lw, "corehound") ~= nil then
@@ -68,26 +113,5 @@ function Leatherworking:parseLW(lw)
         return 'all';
     else
         return '';
-    end
-end
-
-function Leatherworking:parseInput(args)
-    local slot = self:parseSlot(table.remove(args, 1));
-    local lw = self:parseLW(table.remove(args, 1));
-    return { slot, lw };
-end
-
-function Leatherworking:getLeatherworkers(args)
-    local input = self:parseInput(args);
-    local slot = table.remove(input, 1);
-    local lw = table.remove(input, 1);
-    if lw == "all" then
-        local leatherworkers = "";
-        for k,v in pairs(Leatherworking[slot]) do
-            leatherworkers = leatherworkers .. string.upper(k) .. ":  " .. table.concat(Leatherworking[slot][k], ", ") .. "\n\n";
-        end
-        return leatherworkers;
-    else
-        return table.concat(Leatherworking[slot][lw], ", ");
     end
 end

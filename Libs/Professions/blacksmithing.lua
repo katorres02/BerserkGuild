@@ -3,19 +3,46 @@ local _, BS = ...
 -- Blacksmithing map
 Blacksmithing = {
     weapon = {
-        nightfall = {},
-        sulfuron = {}
+        nightfall = {
+            'Nightfall',
+            {}
+        },
+        sulfuron = {
+            'Sulfuron Hammer',
+            {}
+        }
     },
     armor = {
-        lionheart = {},
-        titanic = {},
-        strongholdgauntlets = {},
-        darkiron = {},
-        icebane = {},
-        ironvine = {}
+        lionheart = {
+            'Lionheart Helm',
+            {}
+        },
+        titanic = {
+            'Titanic Leggings',
+            {}
+        },
+        strongholdgauntlets = {
+            'Stronghold Gauntlets',
+            {}
+        },
+        darkiron = {
+            'Dark Iron Armor Set',
+            {}
+        },
+        icebane = {
+            'Icebane Armor Set',
+            {}
+        },
+        ironvine = {
+            'Ironvine Armor Set',
+            {}
+        }
     }, 
     miscellaneous = {
-        elementalsharpeningstone = {}
+        elementalsharpeningstone = {
+            'Elemental Sharpening Stone',
+            {}
+        }
     }
 }
 
@@ -31,7 +58,7 @@ function Blacksmithing:parseSlot(slot)
     end
 end
 
-function Blacksmithing:parseBS(b)
+function Blacksmithing:parseCaty(b)
     if string.find(b, "nightfall") ~= nil then
         return 'nightfall';
     elseif string.find(b, "sulfuron") ~= nil then
@@ -54,26 +81,5 @@ function Blacksmithing:parseBS(b)
         return 'all';
     else
         return '';
-    end
-end
-
-function Blacksmithing:parseInput(args)
-    local slot = self:parseSlot(table.remove(args, 1));
-    local bs = self:parseBS(table.remove(args, 1));
-    return { slot, bs };
-end
-
-function Blacksmithing:getBlacksmiths(args)
-    local input = self:parseInput(args);
-    local slot = table.remove(input, 1);
-    local bs = table.remove(input, 1);
-    if bs == "all" then
-        local blacksmiths = "";
-        for k,v in pairs(Blacksmithing[slot]) do
-            blacksmiths = blacksmiths .. string.upper(k) .. ":  " .. table.concat(Blacksmithing[slot][k], ", ") .. "\n\n";
-        end
-        return blacksmiths;
-    else
-        return table.concat(Blacksmithing[slot][bs], ", ");
     end
 end

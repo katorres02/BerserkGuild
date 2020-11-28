@@ -3,54 +3,160 @@ local _, BS = ...
 -- Enchants map
 Enchanting = {
     weapon = {
-        crusader = {'Caub', 'Fogfig'},
-        damage = {},
-        healing = {},
-        intellect = {'Glico'},
-        lifestealing = {'Glico'},
-        spellpower = {},
-        spirit = {'Glico'},
-        unholy = {'Glico'},
-        icy = {'Glico'},
-        agility1h = {},
-        agility2h = {'Glico'}
+        crusader = {
+            'Crusader',
+            {'Caub', 'Fogfig'}
+        },
+        damage = {
+            'Superior Striking',
+            {}
+        },
+        healing = {
+            'Healing Power',
+            {}
+        },
+        intellect = {
+            'Mighty Intellect',
+            {'Glico'}
+        },
+        lifestealing = {
+            'Lifestealing',
+            {'Glico'}
+        },
+        spellpower = {
+            'Spell Power',
+            {}
+        },
+        spirit = {
+            'Mighty Spirit',
+            {'Glico'}
+        },
+        unholy = {
+            'Unholy',
+            {'Glico'}
+        },
+        icy = {
+            'Icy Chill',
+            {'Glico'}
+        },
+        agility1h = {
+            'Agility 1H',
+            {}
+        },
+        agility2h = {
+            'Agility 2H',
+            {'Glico'}
+        }
     },
     shield = {
-        stamina = {'Glico'}
+        stamina = {
+            'Greater Stamina',
+            {'Glico'}
+        },
+        spirit = {
+            'Superior Spirit',
+            {}
+        }
     },
     cloak = {
-        allresist = {},
-        nature = {'Glico'},
-        subtlety = {},
-        dodge = {}
+        allresist = {
+            'Greater Resistance All +5',
+            {}
+        },
+        nature = {
+            'Greater Nature Resistance',
+            {'Glico'}
+        },
+        subtlety = {
+            'Subtlety',
+            {}
+        },
+        dodge = {
+            'Dodge',
+            {}
+        }
     },
     chest = {
-        mana = {'Glico'},
-        health = {},
-        stats = {}
+        mana = {
+            'Major Mana',
+            {'Glico'}
+        },
+        health = {
+            'Major Health',
+            {}
+        },
+        stats = {
+            'Greater Stats',
+            {}
+        }
     },
     bracer = {
-        intellect = {},
-        healing = {},
-        mp5 = {},
-        strength = {},
-        spirit = {'Glico'},
-        stamina = {'Glico'}
+        intellect = {
+            'Greater Intellect',
+            {}
+        },
+        healing = {
+            'Healing Power',
+            {}
+        },
+        mp5 = {
+            'Mana Regeneration',
+            {'Glico'}
+        },
+        strength = {
+            'Superior Strength',
+            {}
+        },
+        spirit = {
+            'Superior Spirit',
+            {'Glico'}
+        },
+        stamina = {
+            'Superior Stamina',
+            {'Glico'}
+        }
     },
     gloves = {
-        fire = {'Adore'},
-        agility = {},
-        shadow = {},
-        frost = {},
-        healing = {},
-        threat = {}
+        fire = {
+            'Fire Power',
+            {'Adore'}
+        },
+        agility = {
+            'Greater Agility',
+            {}
+        },
+        shadow = {
+            'Shadow Power',
+            {}
+        },
+        frost = {
+            'Frost Power',
+            {}
+        },
+        healing = {
+            'Healing Power',
+            {}
+        },
+        threat = {
+            'Threat',
+            {}
+        }
     },
     boots = {
-        speed = {'Adore', 'Caub', 'Fogfig', 'Glico'}
+        speed = {
+            'Minor Run Speed',
+            {'Adore', 'Caub', 'Fogfig', 'Glico'}
+        }
     },
     oils = {
-        mana = {'Glico'},
-        wizard = {'Glico'}
+        mana = {
+            'Brilliant Mana Oil',
+            {'Glico'}
+        },
+        wizard = {
+            'Brilliant Wizard Oil',
+            {'Glico'}
+        }
     }
 }
 
@@ -76,7 +182,7 @@ function Enchanting:parseSlot(slot)
     end
 end
 
-function Enchanting:parseEnch(ench)
+function Enchanting:parseCaty(ench)
     if string.find(ench, "stats") ~= nil then
         return 'stats';
     elseif string.find(ench, "crusader") ~= nil then
@@ -129,26 +235,5 @@ function Enchanting:parseEnch(ench)
         return 'all';
     else
         return '';
-    end
-end
-
-function Enchanting:parseInput(args)
-    local slot = self:parseSlot(table.remove(args, 1));
-    local ench = self:parseEnch(table.remove(args, 1));
-    return { slot, ench };
-end
-
-function Enchanting:getEnchanters(args)
-    local input = self:parseInput(args);
-    local slot = table.remove(input, 1);
-    local ench = table.remove(input, 1);
-    if ench == "all" then
-        local enchanters = "";
-        for k,v in pairs(Enchanting[slot]) do
-            enchanters = enchanters .. string.upper(k) .. ":  " .. table.concat(Enchanting[slot][k], ", ") .. "\n\n";
-        end
-        return enchanters;
-    else
-        return table.concat(Enchanting[slot][ench], ", ");
     end
 end

@@ -3,28 +3,76 @@ local _, BS = ...
 -- Alchemy map
 Alchemy = {
     flask = {
-        distilledwisdom = {'Shamattack'},
-        supremepower = {'shamattack'},
-        titans = {}
+        distilledwisdom = {
+            'Distilled Wisdom',
+            {'Shamattack'}
+        },
+        supremepower = {
+            'Supreme Power',
+            {'Shamattack'}
+        },
+        titans = {
+            'Titans',
+            {}
+        }
     },
     elixir = {
-        mongoose = {'Shamattack'},
-        giants = {'Shamattack'},
-        greaterarcane = {},
-        greaterfirepower = {},
-        shadowpower = {},
-        frostpower = {},
-        bruteforce = {}
+        mongoose = {
+            'Mongoose',
+            {'Shamattack'}
+        },
+        giants = {
+            'Giants',
+            {'Shamattack'}
+        },
+        greaterarcane = {
+            'Greater Arcane',
+            {}
+        },
+        greaterfirepower = {
+            'Greater Fire Power',
+            {}
+        },
+        shadowpower = {
+            'Shadow Power',
+            {}
+        },
+        frostpower = {
+            'Frost Power',
+            {}
+        },
+        bruteforce = {
+            'Brute Force',
+            {}
+        }
     }, 
     resistance = {
-        greaterfire = {'Shamattack'},
-        greaterfrost = {'Shamattack'},
-        greatershadow = {},
-        greaternature = {'Shamattack'},
-        greaterarcane = {}
+        greaterfire = {
+            'Greater Fire Resist',
+            {'Shamattack'}
+        },
+        greaterfrost = {
+            'Greater Frost Resist',
+            {'Shamattack'}
+        },
+        greatershadow = {
+            'Greater Shadow Resist',
+            {}
+        },
+        greaternature = {
+            'Greater Nature Resist',
+            {'Shamattack'}
+        },
+        greaterarcane = {
+            'Greater Arcane Resist',
+            {}
+        }
     },
     miscellaneous = {
-        mightyrage = {}
+        mightyrage = {
+            'Mighty Rage Potion',
+            {}
+        }
     },
 }
 
@@ -42,7 +90,7 @@ function Alchemy:parseSlot(slot)
     end
 end
 
-function Alchemy:parseAlch(a)
+function Alchemy:parseCaty(a)
     if string.find(a, "wisdom") ~= nil then
         return 'distilledwisdom';
     elseif string.find(a, "supreme") ~= nil then
@@ -77,26 +125,5 @@ function Alchemy:parseAlch(a)
         return 'all';
     else
         return '';
-    end
-end
-
-function Alchemy:parseInput(args)
-    local slot = self:parseSlot(table.remove(args, 1));
-    local a = self:parseAlch(table.remove(args, 1));
-    return { slot, a };
-end
-
-function Alchemy:getAlchemists(args)
-    local input = self:parseInput(args);
-    local slot = table.remove(input, 1);
-    local a = table.remove(input, 1);
-    if a == "all" then
-        local alchemists = "";
-        for k,v in pairs(Alchemy[slot]) do
-            alchemists = alchemists .. string.upper(k) .. ":  " .. table.concat(Alchemy[slot][k], ", ") .. "\n\n";
-        end
-        return alchemists;
-    else
-        return table.concat(Alchemy[slot][a], ", ");
     end
 end

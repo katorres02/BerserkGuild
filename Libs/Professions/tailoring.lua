@@ -3,22 +3,58 @@ local _, BS = ...
 -- Tailoring map
 Tailoring = {
     bags = {
-        mooncloth = {'Glico'},
-        bottomless = {},
-        corefelcloth = {},
-        satchelofcenarius = {'Glico'},
-        bigenchantment = {'Glico'}
+        mooncloth = {
+            'Mooncloth',
+            {'Glico'}
+        },
+        bottomless = {
+            'Bottomless',
+            {}
+        },
+        corefelcloth = {
+            'Core Felcloth',
+            {}
+        },
+        satchelofcenarius = {
+            'Satchel of Cenarius',
+            {'Glico'}
+        },
+        bigenchantment = {
+            'Big Bag of Enchantment',
+            {'Glico'}
+        }
     },
     armor = {
-        bloodvine = {'Glico'},
-        felcloth = {},
-        flarecore = {'Glico'},
-        sylvan = {'Glico'},
-        glacial = {}
+        bloodvine = {
+            'Bloodvine Armor Set',
+            {'Glico'}
+        },
+        felcloth = {
+            'Felcloth Armor Set',
+            {}
+        },
+        flarecore = {
+            'Flarecore Armor Set',
+            {'Glico'}
+        },
+        sylvan = {
+            'Sylvan Armor Set',
+            {'Glico'}
+        },
+        glacial = {
+            'Glacial Armor Set',
+            {}
+        }
     }, 
     cloak = {
-        glacial = {},
-        gaeasembrace = {'Glico'}
+        glacial = {
+            'Glacial Cloak',
+            {}
+        },
+        gaeasembrace = {
+            'Gaea\'s Embrace',
+            {'Glico'}
+        }
     }
 }
 
@@ -34,7 +70,7 @@ function Tailoring:parseSlot(slot)
     end
 end
 
-function Tailoring:parseTailor(t)
+function Tailoring:parseCaty(t)
     if string.find(t, "mooncloth") ~= nil then
         return 'mooncloth';
     elseif string.find(t, "bottomless") ~= nil then
@@ -61,26 +97,5 @@ function Tailoring:parseTailor(t)
         return 'all';
     else
         return '';
-    end
-end
-
-function Tailoring:parseInput(args)
-    local slot = self:parseSlot(table.remove(args, 1));
-    local tl = self:parseTailor(table.remove(args, 1));
-    return { slot, tl };
-end
-
-function Tailoring:getTailors(args)
-    local input = self:parseInput(args);
-    local slot = table.remove(input, 1);
-    local tl = table.remove(input, 1);
-    if tl == "all" then
-        local tailors = "";
-        for k,v in pairs(Tailoring[slot]) do
-            tailors = tailors .. string.upper(k) .. ":  " .. table.concat(Tailoring[slot][k], ", ") .. "\n\n";
-        end
-        return tailors;
-    else
-        return table.concat(Tailoring[slot][tl], ", ");
     end
 end
