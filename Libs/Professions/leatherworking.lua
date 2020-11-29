@@ -37,7 +37,7 @@ Leatherworking = {
         },
         sandstalker = {
             'Sandstalker Armor Set',
-            {'Nico'}
+            {'Nico', 'Clarebear'}
         },
         bramblewood = {
             'Bramblewood Armor Set',
@@ -59,7 +59,7 @@ Leatherworking = {
         },
         onyxia = {
             'Onyxia Scale Cloak',
-            {}
+            {'Clarebear'}
         },
         chromatic = {
             'Chromatic Cloak',

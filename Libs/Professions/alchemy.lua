@@ -11,73 +11,73 @@ Alchemy = {
     flask = {
         distilledwisdom = {
             'Distilled Wisdom',
-            {'Shamattack'}
+            {'Shamattack', 'Lillybell', 'Itches', 'Abathur'}
         },
         supremepower = {
             'Supreme Power',
-            {'Shamattack'}
+            {'Shamattack', 'Lillybell', 'Itches'}
         },
         titans = {
             'Titans',
-            {}
+            {'Itches'}
         }
     },
     elixir = {
         mongoose = {
             'Mongoose',
-            {'Shamattack'}
+            {'Shamattack', 'Lillybell', 'Itches', 'Abathur'}
         },
         giants = {
             'Giants',
-            {'Shamattack'}
+            {'Shamattack', 'Lillybell', 'Itches'}
         },
         greaterarcane = {
             'Greater Arcane',
-            {}
+            {'Lillybell', 'Itches'}
         },
         greaterfirepower = {
             'Greater Fire Power',
-            {}
+            {'Lillybell', 'Itches', 'Abathur'}
         },
         shadowpower = {
             'Shadow Power',
-            {}
+            {'Lillybell', 'Itches', 'Abathur'}
         },
         frostpower = {
             'Frost Power',
-            {}
+            {'Lillybell', 'Itches'}
         },
         bruteforce = {
             'Brute Force',
-            {}
+            {'Itches'}
         }
     }, 
     resistance = {
         greaterfire = {
             'Greater Fire Resist',
-            {'Shamattack'}
+            {'Shamattack', 'Lillybell', 'Itches'}
         },
         greaterfrost = {
             'Greater Frost Resist',
-            {'Shamattack'}
+            {'Shamattack', 'Lillybell', 'Itches', 'Abathur'}
         },
         greatershadow = {
             'Greater Shadow Resist',
-            {}
+            {'Lillybell', 'Itches', 'Abathur'}
         },
         greaternature = {
             'Greater Nature Resist',
-            {'Shamattack'}
+            {'Shamattack', 'Lillybell', 'Itches', 'Abathur'}
         },
         greaterarcane = {
             'Greater Arcane Resist',
-            {}
+            {'Lillybell', 'Itches', 'Abathur'}
         }
     },
     miscellaneous = {
         mightyrage = {
             'Mighty Rage Potion',
-            {}
+            {'Itches'}
         }
     },
 }

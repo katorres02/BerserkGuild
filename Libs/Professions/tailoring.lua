@@ -10,11 +10,11 @@ Tailoring = {
     bags = {
         mooncloth = {
             'Mooncloth',
-            {'Glico'}
+            {'Glico', 'Lillybell', 'Derthul', 'Fuzzman', 'Fogfig'}
         },
         bottomless = {
             'Bottomless',
-            {}
+            {'Fuzzman', 'Fogfig'}
         },
         corefelcloth = {
             'Core Felcloth',
@@ -22,21 +22,21 @@ Tailoring = {
         },
         satchelofcenarius = {
             'Satchel of Cenarius',
-            {'Glico'}
+            {'Glico', 'Lillybell', 'Fuzzman'}
         },
         bigenchantment = {
             'Big Bag of Enchantment',
-            {'Glico'}
+            {'Glico', 'Lillybell', 'Fogfig'}
         }
     },
     armor = {
         bloodvine = {
             'Bloodvine Armor Set',
-            {'Glico'}
+            {'Glico', 'Lillybell', 'Fuzzman'}
         },
         felcloth = {
             'Felcloth Armor Set',
-            {}
+            {'Fuzzman'}
         },
         flarecore = {
             'Flarecore Armor Set',
@@ -44,21 +44,21 @@ Tailoring = {
         },
         sylvan = {
             'Sylvan Armor Set',
-            {'Glico'}
+            {'Glico', 'Fuzzman'}
         },
         glacial = {
             'Glacial Armor Set',
-            {}
+            {'Lillybell', 'Glico'}
         }
     }, 
     cloak = {
         glacial = {
             'Glacial Cloak',
-            {}
+            {'Lillybell', 'Glico'}
         },
         gaeasembrace = {
             'Gaea\'s Embrace',
-            {'Glico'}
+            {'Glico', 'Fuzzman'}
         }
     }
 }

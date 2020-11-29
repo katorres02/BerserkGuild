@@ -74,31 +74,32 @@ function Professions:updateProfessors()
             string.lower(subProfessionValues[selectedSubProfession]),
             "all"
         };
-        professors = Professions:getProfessors(args);
+        professors = Professions:getProfessors(args, selectedProfession);
     end
     return professors;
 end
 
-function Professions:parseInput(args)
-    local slot = _G[selectedProfession]:parseSlot(args[1]);
-    local caty = _G[selectedProfession]:parseCaty(args[2]);
+function Professions:parseInput(args, profession)
+    local slot = _G[profession]:parseSlot(args[1]);
+    local caty = _G[profession]:parseCaty(args[2]);
     return { slot, caty };
 end
 
-function Professions:getProfessors(args)
-    local input = self:parseInput(args);
+function Professions:getProfessors(args, profession)
+    profession = profession:gsub("^%l", string.upper);
+    local input = self:parseInput(args, profession);
     local slot = input[1];
     local caty = input[2];
 
     if caty == "all" then
         local proflist = "";
-        for k,v in pairs(_G[selectedProfession][slot]) do
-            local prettyhdr = "\124cFF00DEAD" ..  _G[selectedProfession][slot][k][1] .. "\n\124r";
-            proflist = proflist .. prettyhdr .. table.concat(_G[selectedProfession][slot][k][2], ", ") .. "\n\n";
+        for k,v in pairs(_G[profession][slot]) do
+            local prettyhdr = "\124cFF00DEAD" ..  _G[profession][slot][k][1] .. "\n\124r";
+            proflist = proflist .. prettyhdr .. table.concat(_G[profession][slot][k][2], ", ") .. "\n\n";
         end
         return proflist;
     else
-        return table.concat(_G[selectedProfession][slot][caty], ", ");
+        return table.concat(_G[profession][slot][caty][2], ", ");
     end
 end
 

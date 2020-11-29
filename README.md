@@ -19,6 +19,13 @@ Will display the UI config section
 ![image](https://user-images.githubusercontent.com/1949867/99913158-dba2ef80-2cc5-11eb-8555-a119e3db5027.png)
 
 
+### Optional CLI
+You can use command line if you are searching for a specific item. For example:
+```
+/berserk prof enchanting weapon crusader
+```
+The above will return you, in your chat window, all the guild members who can do crusader enchant!
+
 
 ### Do not forget that:
 ![magesarethebest](https://user-images.githubusercontent.com/1949867/99911889-50c1f500-2cc5-11eb-8b8e-c78862072c09.PNG)

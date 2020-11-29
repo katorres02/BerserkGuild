@@ -241,17 +241,5 @@ end
 
 function BerserkAddon:getProfessions(args)
     prof = table.remove(args, 1);
-    if prof == "ench" or prof == "enchanting" then
-        self:Print("Enchanters: " .. Enchanting:getEnchanters(args));
-    elseif prof == "alch" or prof == "alchemy" then
-        self:Print("Alchemists: " .. Alchemy:getAlchemists(args));
-    elseif prof == "bs" or prof == "blacksmith" then
-        self:Print("Blacksmiths: " .. Blacksmithing:getBlacksmiths(args));
-    elseif prof == "lw" or prof == "leatherworking" then
-        self:Print("Leatherworkers: " .. Leatherworking:getLeatherworkers(args));
-    elseif prof == "t" or prof == "tailoring" then
-        self:Print("Tailors: " .. Tailoring:getTailors(args));
-    else
-        self:Print("Invalid profession syntax");
-    end
+    self:Print(Professions:getProfessors(args, prof));
 end

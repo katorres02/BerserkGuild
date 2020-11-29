@@ -15,7 +15,7 @@ Enchanting = {
     weapon = {
         crusader = {
             'Crusader',
-            {'Caub', 'Fogfig'}
+            {'Caub', 'Fogfig', 'Fuzzman'}
         },
         damage = {
             'Superior Striking',
@@ -43,11 +43,11 @@ Enchanting = {
         },
         unholy = {
             'Unholy',
-            {'Glico'}
+            {'Glico', 'Fuzzman'}
         },
         icy = {
             'Icy Chill',
-            {'Glico'}
+            {'Glico', 'Fuzzman'}
         },
         agility1h = {
             'Agility 1H',
@@ -61,21 +61,21 @@ Enchanting = {
     shield = {
         stamina = {
             'Greater Stamina',
-            {'Glico'}
+            {'Glico', 'Fuzzman'}
         },
         spirit = {
             'Superior Spirit',
-            {}
+            {'Fuzzman'}
         }
     },
     cloak = {
         allresist = {
             'Greater Resistance All +5',
-            {}
+            {'Fuzzman'}
         },
         nature = {
             'Greater Nature Resistance',
-            {'Glico'}
+            {'Glico', 'Fuzzman'}
         },
         subtlety = {
             'Subtlety',
@@ -93,7 +93,7 @@ Enchanting = {
         },
         health = {
             'Major Health',
-            {}
+            {'Fuzzman'}
         },
         stats = {
             'Greater Stats',
@@ -107,15 +107,15 @@ Enchanting = {
         },
         healing = {
             'Healing Power',
-            {}
+            {'Fuzzman'}
         },
         mp5 = {
             'Mana Regeneration',
-            {'Glico'}
+            {'Glico', 'Fuzzman'}
         },
         strength = {
             'Superior Strength',
-            {}
+            {'Fuzzman'}
         },
         spirit = {
             'Superior Spirit',
@@ -129,11 +129,11 @@ Enchanting = {
     gloves = {
         fire = {
             'Fire Power',
-            {'Adore'}
+            {'Adore', 'Fogfig'}
         },
         agility = {
             'Greater Agility',
-            {}
+            {'Fuzzman'}
         },
         shadow = {
             'Shadow Power',
@@ -141,11 +141,11 @@ Enchanting = {
         },
         frost = {
             'Frost Power',
-            {}
+            {'Fogfig'}
         },
         healing = {
             'Healing Power',
-            {}
+            {'Fogfig'}
         },
         threat = {
             'Threat',
@@ -155,17 +155,17 @@ Enchanting = {
     boots = {
         speed = {
             'Minor Run Speed',
-            {'Adore', 'Caub', 'Fogfig', 'Glico'}
+            {'Adore', 'Caub', 'Fogfig', 'Glico', 'Fuzzman'}
         }
     },
     oils = {
         mana = {
             'Brilliant Mana Oil',
-            {'Glico'}
+            {'Glico', 'Fuzzman'}
         },
         wizard = {
             'Brilliant Wizard Oil',
-            {'Glico'}
+            {'Glico', 'Fuzzman'}
         }
     }
 }
