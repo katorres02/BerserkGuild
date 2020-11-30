@@ -20,4 +20,11 @@ Libs/classes/shamans.lua
 Libs/classes/warlocks.lua
 Libs/classes/warriors.lua
 
+Libs/Professions/professions.lua
+Libs/Professions/alchemy.lua
+Libs/Professions/blacksmithing.lua
+Libs/Professions/enchanting.lua
+Libs/Professions/leatherworking.lua
+Libs/Professions/tailoring.lua
+
 config.lua
