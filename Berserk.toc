@@ -27,4 +27,6 @@ Libs/Professions/enchanting.lua
 Libs/Professions/leatherworking.lua
 Libs/Professions/tailoring.lua
 
+Libs/DeathMessages/DeathMessage.lua
+
 config.lua

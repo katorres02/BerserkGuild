@@ -5,18 +5,6 @@ local _, BS = ...
 
 BerserkAddon = LibStub("AceAddon-3.0"):NewAddon("BerserkAddon", "AceConsole-3.0", "AceEvent-3.0")
 
-local defaults = {
-    profile = {
-        message = "Welcome Home!",
-        showInChat_1 = false,
-        playerName_1 = "",
-        messagePlayer_1 = "",
-    },
-}
-
--- this table controls the number of messages that the addon displays
-local deathMessagesList = {}
-
 local options = {
     name = "BerserkAddon",
     handler = BerserkAddon,
@@ -31,39 +19,8 @@ local options = {
             order = 1,
             name = "Death Messages",
             type = "group",
-            args={
-                desc = {
-                    order = 0,
-                    type = "description",
-                    name = "Display a message when a party player dies",
-                },
-                inputPlayerName_1 = {
-                    order = 0,
-                    type = "input",
-                    name = "Name of Player 1",
-                    desc = "Target Player name",
-                    usage = "<Your message>",
-                    get = "GetPlayerName_1",
-                    set = "SetPlayerName_1",
-                },
-                inputMessagePlayer_1 = {
-                    order = 1,
-                    type = "input",
-                    name = "Message for Player 1",
-                    desc = "This is the message you want to show when this player dies",
-                    usage = "<Your message>",
-                    get = "GetMessagePlayer_1",
-                    set = "SetMessagePlayer_1",
-                },
-                showInChat = {
-                    order = 2,
-                    type = "toggle",
-                    name = "Trigger listener",
-                    desc = "Triggers a listener event every second checking if the player is dead or not.",
-                    get = "IsShowInChat_1",
-                    set = "ToggleShowInChat_1",
-                },
-            },
+            handler = DM,
+            args = DM.UIOptions
         },
         druids = {
             order = 2,
@@ -124,7 +81,7 @@ local options = {
 
 function BerserkAddon:OnInitialize()
     self:Print("Welcome back "..UnitName("player").."!")
-    self.db = LibStub("AceDB-3.0"):New("BerserkDB", defaults, true)
+    self.db = LibStub("AceDB-3.0"):New("BerserkDB", {}, true)
 
     -- Called when the addon is loaded
     LibStub("AceConfig-3.0"):RegisterOptionsTable("BerserkAddon", options)
@@ -132,40 +89,7 @@ function BerserkAddon:OnInitialize()
     self:RegisterChatCommand("berserk", "ChatCommand")
     self:RegisterChatCommand("bs", "ChatCommand")
 
-    self:InitializeThicker()
-end
-
-function BerserkAddon:InitializeThicker()
-    if self.db.profile.showInChat_1 then
-        self.hanldeTicker = C_Timer.NewTicker(1, function() self:DetectDeadPlayer() end)
-    end
-end
-
-function BerserkAddon:CancelThicker()
-    if not self.hanldeTicker:IsCancelled() then
-        self.hanldeTicker:Cancel()
-    end
-end
-
-function BerserkAddon:DetectDeadPlayer()
-    groupMembers = GetNumGroupMembers()
-    for i=1, groupMembers do
-        name = select(1, GetRaidRosterInfo(i)):lower()
-        isDead = select(9, GetRaidRosterInfo(i))
-
-        if( name == self.db.profile.playerName_1:lower() and isDead ) then
-
-            if (not deathMessagesList[name]) then
-                self:Print(name..(": dead detected"))
-                SendChatMessage(self.db.profile.messagePlayer_1, "RAID")
-                deathMessagesList[name] = true
-            end
-
-        elseif ( name == self.db.profile.playerName_1:lower() and not isDead ) then
-            -- when player is alive again we enable the message again
-            deathMessagesList[name] = false
-        end
-    end
+    DM:Initialize(self.db)
 end
 
 function BerserkAddon:ChatCommand(input)
@@ -188,35 +112,6 @@ end
 
 function BerserkAddon:OnEnable()
     -- Called when the addon is enabled
-end
-
-function BerserkAddon:GetPlayerName_1(info)
-    return self.db.profile.playerName_1
-end
-
-function BerserkAddon:SetPlayerName_1(info, newValue)
-    self.db.profile.playerName_1 = newValue
-end
-
-function BerserkAddon:GetMessagePlayer_1(info)
-    return self.db.profile.messagePlayer_1
-end
-
-function BerserkAddon:SetMessagePlayer_1(info, newValue)
-    self.db.profile.messagePlayer_1 = newValue
-end
-
-function BerserkAddon:IsShowInChat_1(info)
-    return self.db.profile.showInChat_1
-end
-
-function BerserkAddon:ToggleShowInChat_1(info, value)
-    self.db.profile.showInChat_1 = value
-    if value then
-        self:InitializeThicker()
-    else
-        self:CancelThicker()
-    end
 end
 
 ------------------------------
