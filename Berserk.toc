@@ -1,7 +1,7 @@
 ## Title: Berserk
 ## Interface: 11306
 ## Notes: Berserk Guild WoW Classic.
-## Author: Merloc
+## Author: Merloc github@katorres02, Glico github@outerwear
 ## Version: 1.0.0-beta
 ## X-License: GPL v2
 ## SavedVariables: BerserkDB
