@@ -129,7 +129,7 @@ Enchanting = {
     gloves = {
         fire = {
             'Fire Power',
-            {'Adore', 'Fogfig'}
+            {'Adore', 'Fogfig', 'Caub'}
         },
         agility = {
             'Greater Agility',
