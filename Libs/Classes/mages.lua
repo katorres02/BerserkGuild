@@ -17,6 +17,22 @@ Mages = {
             type = "description",
             name = function() return Mages:Rotation() end,
         },
+        bis = {
+            order = 2,
+            type = "header",
+            name = "BIS Items",
+        },
+        bisitems = {
+            order = 3,
+            type = "description",
+            name = function() return Mages:BISDescription() end,
+        },
+        tryon = {
+            order = 4,
+            name = "Try On",
+            type = "execute",
+            func = function() Mages:TryOn() end
+        }
     }
 }
 
@@ -44,4 +60,43 @@ end
 ------------------------------
 function Mages:Rotation()
     return "Weekly Mage Rotation\n".."Roster\n    "..self:StringRoster().."\nBench:\n    "..self:Bench()
+end
+
+function Mages:BISItems()
+    local items = {
+        Helm = 22498, --Frostfire Circlet
+        Neck = 23057, --Gem of Trapped Innocents
+        Shoulder = 22983, --Rime Covered Mantle
+        Cloack = 23050,--Cloak of the Necropolis
+        Chest = 22496,-- Frostfire Robe
+        Wrist = 23021, --The Soul Harvester's Bindings
+        Gloves = 21585, --Dark Storm Gauntlets
+        Belt = 22730, --Eyestalk Waist Cord
+        Legs = 23070, --Leggings of Polarity
+        Boots = 22500, --Frostfire Sandals
+        Onehand = 22807, --Wraith Blade
+        OffJand = 23049, --Sapphiron's Left Eye
+        Trinket1 = 19379, --Neltharion's Tear
+        Trinket2 = 23046, --The Restrained Essence of Sapphiron
+        Trinket3 = 19339, --Mind Quickening Gem
+        Ring1 = 23062, --Frostfire Ring
+        Ring2 = 23237, --Ring of the Eternal Flame
+        --ranged = 22821, --Doomfinger
+    }
+    return items
+end
+
+function Mages:TryOn()
+    for k,v in pairs(self:BISItems()) do
+        DressUpItemLink(select(2, GetItemInfo(v)))
+    end
+end
+
+function Mages:BISDescription()
+    local result = "";
+    for k,v in pairs(self:BISItems()) do
+        item = select(2, GetItemInfo(v))
+        result = result ..k.. " " ..item.."\n"
+    end
+    return result
 end
