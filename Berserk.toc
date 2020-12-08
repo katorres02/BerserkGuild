@@ -11,6 +11,8 @@
 
 embeds.xml
 
+Libs/Features/BisPreview.lua
+
 Libs/classes/druids.lua
 Libs/classes/hunters.lua
 Libs/classes/mages.lua

@@ -7,6 +7,7 @@ Mages = {
     roster = { 'Lilschierke', 'Lillybell', 'Arven', 'Firebeard', 'Merloc', 'Glico' },
     offsetRotation = 4, -- offset for our existing rotation to continue
     bisitemslist = {
+        -- list of ItemLinks
         Helm = select(2, GetItemInfo(22498)), --Frostfire Circlet
         Neck = select(2, GetItemInfo(23057)), --Gem of Trapped Innocents
         Shoulder = select(2, GetItemInfo(22983)), --Rime Covered Mantle
@@ -45,13 +46,13 @@ Mages = {
         bisitemsdesc = {
             order = 3,
             type = "description",
-            name = function() return Mages:BISDescription() end,
+            name = function() return BS:BISDescription(Mages.bisitemslist) end,
         },
         tryon = {
             order = 4,
             name = "Preview",
             type = "execute",
-            func = function() Mages:Preview() end
+            func = function() BS:Preview(Mages.bisitemslist) end
         },
     }
 }
@@ -80,18 +81,4 @@ end
 ------------------------------
 function Mages:Rotation()
     return "Weekly Mage Rotation\n".."Roster\n    "..self:StringRoster().."\nBench:\n    "..self:Bench()
-end
-
-function Mages:Preview()
-    for k,v in pairs(self.bisitemslist) do
-        DressUpItemLink(select(2, GetItemInfo(v)))
-    end
-end
-
-function Mages:BISDescription()
-    local result = ""
-    for k,v in pairs(self.bisitemslist) do
-        result = result ..k .."\n" ..v.."\n"
-    end
-    return result
 end
